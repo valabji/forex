@@ -13,6 +13,8 @@ import TabBarIcon from './components/TabBarIcon';
 import Screen3 from './screens/Screen3'
 import useLinking from './navigation/useLinking';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Clrs from "./constants/Colors";
+import { useFonts, Cairo_400Regular } from '@expo-google-fonts/cairo';
 
 const Stack = createStackNavigator();
 
@@ -21,7 +23,9 @@ export default function App(props) {
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
-
+  let [fontsLoaded] = useFonts({
+    Cairo_400Regular,
+  });
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
@@ -49,8 +53,8 @@ export default function App(props) {
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <Stack.Navigator>
-            <Stack.Screen name="Root" component={BNav} options={{title:"ReKit / Login",headerShown:false ,headerStyle:{backgroundColor:"#ddd"}}} />
-            <Stack.Screen name="BotNav" component={DNav} options={{title:"Main Screen",headerShown:false , headerStyle:{backgroundColor:"#ddd"}}}/>
+            <Stack.Screen name="BotNav" component={DNav} options={{ title: "Main Screen", headerShown: false, headerStyle: { backgroundColor: "#ddd" } }} />
+            <Stack.Screen name="Root" component={BNav} options={{ title: "ReKit / Login", headerShown: false, headerStyle: { backgroundColor: "#ddd" } }} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
@@ -58,17 +62,23 @@ export default function App(props) {
   }
 }
 const Drawer = createDrawerNavigator();
-function DNav(){
-  return(
-    <Drawer.Navigator initialRouteName="Home"> 
-      <Drawer.Screen name="Home" component={BottomTabNavigator}/>
-      <Drawer.Screen name="Screen3" component={Screen3}/>
+function DNav() {
+  return (
+    <Drawer.Navigator initialRouteName="Home"
+      drawerType="slide"
+      drawerContent={() => <View
+        style={{ width: "100%", height: "100%", backgroundColor: Clrs.BGreen }}>
+
+      </View>}
+    >
+      <Drawer.Screen name="Home" component={BottomTabNavigator} />
+      <Drawer.Screen name="Screen3" component={Screen3} />
     </Drawer.Navigator>
   );
 }
 
 const BottomNav = createBottomTabNavigator();
-function BNav(){
+function BNav() {
   return (
     <BottomNav.Navigator initialRouteName="Login">
       <BottomNav.Screen
@@ -94,6 +104,6 @@ function BNav(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F0F',
   },
 });
