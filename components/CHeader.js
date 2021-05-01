@@ -67,7 +67,7 @@ export default function CustomHeader({ title, isHome, navigation }) {
           </View>
       }
       <View style={{ flex: 1.5, justifyContent: 'center' }}>
-        <Text style={{ textAlign: 'center',fontFamily:"Cairo_400Regular", fontWeight: 500, color: Clrs.BYellow, fontSize: 18 }}>{title}</Text>
+        <Text style={{ textAlign: 'center',fontFamily:"Cairo_400Regular", fontWeight: '500', color: Clrs.BYellow, fontSize: 18 }}>{title}</Text>
       </View>
       <View style={{ flex: 1 }}></View>
     </LinearGradient>

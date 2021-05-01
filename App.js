@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View, Text } from 'react-native';
-import { SplashScreen } from 'expo';
+// import { SplashScreen } from 'expo';
+import * as SplashScreen from 'expo-splash-screen';
+
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
@@ -29,7 +31,8 @@ export default function App(props) {
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.preventAutoHide();
+        // SplashScreen.preventAutoHide();
+        SplashScreen.preventAutoHideAsync();
         setInitialNavigationState(await getInitialState());
         await Font.loadAsync({
           ...Ionicons.font,
@@ -39,7 +42,8 @@ export default function App(props) {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        SplashScreen.hide();
+        // SplashScreen.hide();
+        SplashScreen.hideAsync();
       }
     }
 
@@ -104,6 +108,7 @@ function BNav() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0F',
+    backgroundColor: Clrs.DGreen,
+    paddingTop:20,
   },
 });

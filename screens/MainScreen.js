@@ -5,7 +5,7 @@ import { StackActions } from '@react-navigation/native';
 import Clrs from "../constants/Colors";
 // import React9Slice from 'react-9-slice';
 // import ImageCapInset from 'react-native-image-capinsets';
-const width = Dimensions.get("window").width
+const width = Dimensions.get("screen").width
 export default function HomeScreen({ navigation }) {
 
   const res = {
@@ -19,7 +19,6 @@ export default function HomeScreen({ navigation }) {
   }
 
   const rates = res.rates
-
   return (
     <View style={{ flex: 1 }}>
       <CustomHeader title="اسعار العملات" isHome={true} navigation={navigation} />
@@ -27,9 +26,8 @@ export default function HomeScreen({ navigation }) {
         style={{ flex: 1, backgroundColor: Clrs.DGreen }}
         contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}
       >
-        <View style={{ backgroundColor: "red", width: width - 20, height: 100 }} />
-        <Text style={{ fontSize: 24, fontFamily: "Cairo_400Regular", marginBottom: 10, marginTop: 20, color: Clrs.BYellow }} onPress={() => navigation.toggleDrawer()} >السعر الاول</Text>
-        <Text style={{ fontSize: 14, fontFamily: "Cairo_400Regular", marginBottom: 10, marginTop: 60, color: Clrs.BYellow }} onPress={() => navigation.dispatch(StackActions.replace('Root'))} >Logout</Text>
+        {/* {rates.map} */}
+        <View style={{ backgroundColor: "red", width, marginLeft: 20,marginRight:10, height: 100 }} />
       </ScrollView>
     </View>
   );
