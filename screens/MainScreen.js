@@ -1,8 +1,10 @@
 import * as React from 'react';
 import CustomHeader from '../components/CHeader'
-import { Text, View, SafeAreaView, Dimensions, Image, ImageBackground, ScrollView } from 'react-native'
+import { Text, View, SafeAreaView, Dimensions, Image, ImageBackground, ScrollView, TextInput } from 'react-native'
 import { StackActions } from '@react-navigation/native';
 import Clrs from "../constants/Colors";
+import { Feather } from '@expo/vector-icons';
+import { useState } from 'react';
 // import React9Slice from 'react-9-slice';
 // import ImageCapInset from 'react-native-image-capinsets';
 const width = Dimensions.get("screen").width
@@ -17,17 +19,261 @@ export default function HomeScreen({ navigation }) {
     },
     "unit": "per ounce"
   }
+  const means = {
+    "ADA": "Cardano",
+    "AED": "United Arab Emirates Dirham",
+    "AFN": "Afghan Afghani",
+    "ALL": "Albanian Lek",
+    "ALU": "Aluminum",
+    "AMD": "Armenian Dram",
+    "ANG": "Netherlands Antillean Gulden",
+    "AOA": "Angolan Kwanza",
+    "ARS": "Argentine Peso",
+    "AUD": "Australian Dollar",
+    "AWG": "Aruban Florin",
+    "AZN": "Azerbaijani Manat",
+    "BAM": "Bosnia and Herzegovina Convertible Mark",
+    "BBD": "Barbadian Dollar",
+    "BCH": "Bitcoin Cash",
+    "BDT": "Bangladeshi Taka",
+    "BGN": "Bulgarian Lev",
+    "BHD": "Bahraini Dinar",
+    "BIF": "Burundian Franc",
+    "BMD": "Bermudian Dollar",
+    "BND": "Brunei Dollar",
+    "BOB": "Bolivian Boliviano",
+    "BRL": "Brazilian Real",
+    "BSD": "Bahamian Dollar",
+    "BTC": "Bitcoin",
+    "BTN": "Bhutanese Ngultrum",
+    "BWP": "Botswana Pula",
+    "BYN": "Belarusian Ruble",
+    "BYR": "Belarusian Ruble",
+    "BZD": "Belize Dollar",
+    "CAD": "Canadian Dollar",
+    "CDF": "Congolese Franc",
+    "CHF": "Swiss Franc",
+    "CLF": "Unidad de Fomento",
+    "CLP": "Chilean Peso",
+    "CNH": "Chinese Renminbi Yuan Offshore",
+    "CNY": "Chinese Renminbi Yuan",
+    "COP": "Colombian Peso",
+    "CRC": "Costa Rican Colón",
+    "CUC": "Cuban Convertible Peso",
+    "CVE": "Cape Verdean Escudo",
+    "CZK": "Czech Koruna",
+    "DJF": "Djiboutian Franc",
+    "DKK": "Danish Krone",
+    "DOP": "Dominican Peso",
+    "DZD": "Algerian Dinar",
+    "EEK": "Estonian Kroon",
+    "EGP": "Egyptian Pound",
+    "ERN": "Eritrean Nakfa",
+    "ETB": "Ethiopian Birr",
+    "ETH": "Ethereum",
+    "EUR": "Euro",
+    "FJD": "Fijian Dollar",
+    "FKP": "Falkland Pound",
+    "GBP": "British Pound",
+    "GEL": "Georgian Lari",
+    "GGP": "Guernsey Pound",
+    "GHS": "Ghanaian Cedi",
+    "GIP": "Gibraltar Pound",
+    "GMD": "Gambian Dalasi",
+    "GNF": "Guinean Franc",
+    "GTQ": "Guatemalan Quetzal",
+    "GYD": "Guyanese Dollar",
+    "HKD": "Hong Kong Dollar",
+    "HNL": "Honduran Lempira",
+    "HRK": "Croatian Kuna",
+    "HTG": "Haitian Gourde",
+    "HUF": "Hungarian Forint",
+    "IDR": "Indonesian Rupiah",
+    "ILS": "Israeli New Sheqel",
+    "IMP": "Isle of Man Pound",
+    "INR": "Indian Rupee",
+    "IQD": "Iraqi Dinar",
+    "ISK": "Icelandic Króna",
+    "JEP": "Jersey Pound",
+    "JMD": "Jamaican Dollar",
+    "JOD": "Jordanian Dinar",
+    "JPY": "Japanese Yen",
+    "KES": "Kenyan Shilling",
+    "KGS": "Kyrgyzstani Som",
+    "KHR": "Cambodian Riel",
+    "KMF": "Comorian Franc",
+    "KRW": "South Korean Won",
+    "KWD": "Kuwaiti Dinar",
+    "KYD": "Cayman Islands Dollar",
+    "KZT": "Kazakhstani Tenge",
+    "LAK": "Lao Kip",
+    "LBP": "Lebanese Pound",
+    "LINK": "Chainlink",
+    "LKR": "Sri Lankan Rupee",
+    "LRD": "Liberian Dollar",
+    "LSL": "Lesotho Loti",
+    "LTC": "Litecoin",
+    "LTL": "Lithuanian Litas",
+    "LVL": "Latvian Lats",
+    "LYD": "Libyan Dinar",
+    "MAD": "Moroccan Dirham",
+    "MDL": "Moldovan Leu",
+    "MGA": "Malagasy Ariary",
+    "MKD": "Macedonian Denar",
+    "MMK": "Myanmar Kyat",
+    "MNT": "Mongolian Tögrög",
+    "MOP": "Macanese Pataca",
+    "MRO": "Mauritanian Ouguiya",
+    "MTL": "Maltese Lira",
+    "MUR": "Mauritian Rupee",
+    "MVR": "Maldivian Rufiyaa",
+    "MWK": "Malawian Kwacha",
+    "MXN": "Mexican Peso",
+    "MYR": "Malaysian Ringgit",
+    "MZN": "Mozambican Metical",
+    "NAD": "Namibian Dollar",
+    "NGN": "Nigerian Naira",
+    "NI": "Nickel",
+    "NIO": "Nicaraguan Córdoba",
+    "NOK": "Norwegian Krone",
+    "NPR": "Nepalese Rupee",
+    "NZD": "New Zealand Dollar",
+    "OMR": "Omani Rial",
+    "PAB": "Panamanian Balboa",
+    "PEN": "Peruvian Sol",
+    "PGK": "Papua New Guinean Kina",
+    "PHP": "Philippine Peso",
+    "PKR": "Pakistani Rupee",
+    "PLN": "Polish Złoty",
+    "PYG": "Paraguayan Guaraní",
+    "QAR": "Qatari Riyal",
+    "RON": "Romanian Leu",
+    "RSD": "Serbian Dinar",
+    "RUB": "Russian Ruble",
+    "RUTH": "Ruthenium",
+    "RWF": "Rwandan Franc",
+    "SAR": "Saudi Riyal",
+    "SBD": "Solomon Islands Dollar",
+    "SCR": "Seychellois Rupee",
+    "SEK": "Swedish Krona",
+    "SGD": "Singapore Dollar",
+    "SHP": "Saint Helenian Pound",
+    "SLL": "Sierra Leonean Leone",
+    "SOS": "Somali Shilling",
+    "SRD": "Surinamese Dollar",
+    "SSP": "South Sudanese Pound",
+    "STD": "São Tomé and Príncipe Dobra",
+    "SVC": "Salvadoran Colón",
+    "SZL": "Swazi Lilangeni",
+    "THB": "Thai Baht",
+    "TIN": "Tin",
+    "TJS": "Tajikistani Somoni",
+    "TMT": "Turkmenistani Manat",
+    "TND": "Tunisian Dinar",
+    "TOP": "Tongan Paʻanga",
+    "TRY": "Turkish Lira",
+    "TTD": "Trinidad and Tobago Dollar",
+    "TWD": "New Taiwan Dollar",
+    "TZS": "Tanzanian Shilling",
+    "UAH": "Ukrainian Hryvnia",
+    "UGX": "Ugandan Shilling",
+    "UNI": "Uniswap",
+    "USD": "United States Dollar",
+    "UYU": "Uruguayan Peso",
+    "UZS": "Uzbekistan Som",
+    "VEF": "Venezuelan Bolívar",
+    "VES": "Venezuelan Bolívar Soberano",
+    "VND": "Vietnamese Đồng",
+    "VUV": "Vanuatu Vatu",
+    "WST": "Samoan Tala",
+    "XAF": "Central African Cfa Franc",
+    "XAG": "Silver (Troy Ounce)",
+    "XAU": "Gold (Troy Ounce)",
+    "XCD": "East Caribbean Dollar",
+    "XCU": "Copper",
+    "XDR": "Special Drawing Rights",
+    "XLM": "Stellar",
+    "XOF": "West African Cfa Franc",
+    "XPD": "Palladium (Troy Ounce)",
+    "XPF": "Cfp Franc",
+    "XPT": "Platinum (Troy Ounce)",
+    "XRH": "Rhodium (Troy Ounce)",
+    "XRP": "Ripple",
+    "XRP2": "Ripple",
+    "YER": "Yemeni Rial",
+    "ZAR": "South African Rand",
+    "ZMK": "Zambian Kwacha",
+    "ZMW": "Zambian Kwacha",
+    "ZNC": "Zinc",
+    "ZWL": "Zimbabwean Dollar"
+  }
+  // const rates = res.rates
+  // const keys = Object.keys(rates)
+  const [srates, setSrates] = useState(res.rates)
 
-  const rates = res.rates
   return (
     <View style={{ flex: 1 }}>
-      <CustomHeader title="اسعار العملات" isHome={true} navigation={navigation} />
+      <CustomHeader title="اسعار العملات و المعادن" isHome={true} navigation={navigation} />
+      <View style={{
+        margin: 2,
+        padding: 5,
+        borderRadius: 3,
+      }}>
+        <TextInput
+          placeholder="بحث"
+          onChangeText={(v) => {
+            var rates = res.rates
+            var rt = {};
+            Object.keys(rates).map((i, index) => {
+              if(i.includes(v)){
+                rt[i] = rates[i]
+              }
+            })
+            if(rt == {}){
+              setSrates(rt)
+            }else{
+              setSrates(rates)
+            }
+          }}
+          style={{
+            fontFamily: "Cairo_400Regular"
+          }}
+        />
+      </View>
       <ScrollView
-        style={{ flex: 1, backgroundColor: Clrs.DGreen }}
-        contentContainerStyle={{ flex: 1, alignItems: 'center', justifyContent: 'center', }}
+        style={{ backgroundColor: Clrs.DGreen }}
+        contentContainerStyle={{ flex: 1, alignItems: 'center', }}
       >
-        {/* {rates.map} */}
-        <View style={{ backgroundColor: "red", width, marginLeft: 20,marginRight:10, height: 100 }} />
+        {Object.keys(srates).map((i, index) => {
+          let nrt = 1 / srates[i]
+          let rt = nrt.toFixed(2)
+          if (rt == "0.00") {
+            rt = nrt.toFixed(4)
+          }
+          if (rt == "0.0000") {
+            rt = nrt.toFixed(6)
+          }
+          if (rt == "0.000000") {
+            rt = nrt.toFixed(8)
+          }
+          if (rt == "0.00000000") {
+            rt = nrt
+          }
+          return <View style={{ backgroundColor: Clrs.BGreen, width: width - 30, marginBottom: 10, borderRadius: 12, padding: 10, }} >
+            <View style={{ flexDirection: "row-reverse" }} >
+              <Feather name="edit" size={18} style={{ paddingTop: 5 }} />
+              <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الرمز : {i}</Text>
+            </View>
+            <View style={{ flexDirection: "row-reverse" }} >
+              <Feather name="tag" size={18} style={{ paddingTop: 5 }} />
+              <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الاسم : {means[i]}</Text>
+            </View>
+            <View style={{ flexDirection: "row-reverse" }} >
+              <Feather name="dollar-sign" size={18} style={{ paddingTop: 5 }} />
+              <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>السعر بالدولار : {rt}$</Text>
+            </View>
+          </View>
+        })}
       </ScrollView>
     </View>
   );

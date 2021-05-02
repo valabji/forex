@@ -34,7 +34,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Main"
         component={MainScreen}
         options={{
-          tabBarLabel: ({ focused }) => { return <Text style={{ color: focused ? Clrs.BYellow : Clrs.tabIconDefault, paddingTop:5,paddingBottom:2 }}>محول العملات</Text> },
+          tabBarLabel: ({ focused }) => { return <Text style={{ color: focused ? Clrs.BYellow : Clrs.tabIconDefault, paddingTop:5,paddingBottom:2 }}>المحول</Text> },
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="sync" />,
         }}
       />
@@ -42,7 +42,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Sc2"
         component={Screen2}
         options={{
-          tabBarLabel: ({ focused }) => { return <Text style={{ color: focused ? Clrs.BYellow : Clrs.tabIconDefault, paddingTop:5,paddingBottom:2 }}>قائمة العملات</Text> },
+          tabBarLabel: ({ focused }) => { return <Text style={{ color: focused ? Clrs.BYellow : Clrs.tabIconDefault, paddingTop:5,paddingBottom:2 }}>قائمة الاسعار</Text> },
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="bars" />,
         }}
       />
