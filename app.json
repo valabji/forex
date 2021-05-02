@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Rekit",
-    "slug": "ReKit",
+    "name": "Forex",
+    "slug": "Forex",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -24,9 +24,12 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.valabji.rekit",
+      "bundleIdentifier": "com.valabji.khamsat.forex",
       "supportsTablet": true
     },
-    "android": {}
+    "android": {
+      "package": "com.valabji.khamsat.forex"
+    },
+    "description": ""
   }
 }

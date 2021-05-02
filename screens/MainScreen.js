@@ -1,15 +1,20 @@
 import * as React from 'react';
 import CustomHeader from '../components/CHeader'
-import { Text, View, SafeAreaView, Dimensions, Image, ImageBackground, ScrollView, TextInput } from 'react-native'
+import { Text, View, TouchableOpacity, StyleSheet, Alert, TouchableHighlight, SafeAreaView, Modal, Dimensions, Image, ScrollView, ImageBackground, TextInput } from 'react-native'
 import { StackActions } from '@react-navigation/native';
 import Clrs from "../constants/Colors";
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 // import React9Slice from 'react-9-slice';
 // import ImageCapInset from 'react-native-image-capinsets';
 const width = Dimensions.get("screen").width
 export default function HomeScreen({ navigation }) {
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [f, setF] = useState(true);
+  const [from, setFrom] = useState("USD")
+  const [to, setTo] = useState("KWD")
+  const [fvalue, setFvalue] = useState(0.0)
+  const [tvalue, setTvalue] = useState(0.0)
   const res = {
     "success": true, "timestamp": 1619799840,
     "date": "2021-04-30", "base": "USD",
@@ -207,74 +212,208 @@ export default function HomeScreen({ navigation }) {
     "ZNC": "Zinc",
     "ZWL": "Zimbabwean Dollar"
   }
-  // const rates = res.rates
+  const rates = res.rates
   // const keys = Object.keys(rates)
-  const [srates, setSrates] = useState(res.rates)
-
+  const [srates, setSrates] = useState(rates)
   return (
     <View style={{ flex: 1 }}>
-      <CustomHeader title="اسعار العملات و المعادن" isHome={true} navigation={navigation} />
-      <View style={{
-        margin: 2,
-        padding: 5,
-        borderRadius: 3,
-      }}>
-        <TextInput
-          placeholder="بحث"
-          onChangeText={(v) => {
-            var rates = res.rates
-            var rt = {};
-            Object.keys(rates).map((i, index) => {
-              if(i.includes(v)){
-                rt[i] = rates[i]
-              }
-            })
-            if(rt == {}){
-              setSrates(rt)
-            }else{
-              setSrates(rates)
-            }
-          }}
-          style={{
-            fontFamily: "Cairo_400Regular"
-          }}
-        />
-      </View>
-      <ScrollView
-        style={{ backgroundColor: Clrs.DGreen }}
-        contentContainerStyle={{ flex: 1, alignItems: 'center', }}
-      >
-        {Object.keys(srates).map((i, index) => {
-          let nrt = 1 / srates[i]
-          let rt = nrt.toFixed(2)
-          if (rt == "0.00") {
-            rt = nrt.toFixed(4)
-          }
-          if (rt == "0.0000") {
-            rt = nrt.toFixed(6)
-          }
-          if (rt == "0.000000") {
-            rt = nrt.toFixed(8)
-          }
-          if (rt == "0.00000000") {
-            rt = nrt
-          }
-          return <View style={{ backgroundColor: Clrs.BGreen, width: width - 30, marginBottom: 10, borderRadius: 12, padding: 10, }} >
-            <View style={{ flexDirection: "row-reverse" }} >
-              <Feather name="edit" size={18} style={{ paddingTop: 5 }} />
-              <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الرمز : {i}</Text>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(false)
+          // Alert.alert('Modal has been closed.');
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={{
+              borderRadius: 6,
+              width: "100%",
+              margin: 15,
+              backgroundColor: Clrs.BYellow
+            }}>
+              <TextInput
+                placeholder="بحث"
+                onChangeText={(v) => {
+                  v = v.toUpperCase()
+                  console.log(v)
+                  var rates = res.rates
+                  var rt = {};
+                  Object.keys(rates).map((i, index) => {
+                    if (i.includes(v) || means[i].toUpperCase().includes(v)) {
+                      rt[i] = rates[i]
+                      // console.log(means[i])
+                    }
+                  })
+                  if (Object.keys(rt).length > 0) {
+                    setSrates(rt)
+                  } else {
+                    setSrates(rates)
+                  }
+                  console.log(JSON.stringify(rt) == JSON.stringify({}))
+                  console.log(rt == {})
+                }}
+                style={{
+                  fontFamily: "Cairo_400Regular",
+                  padding: 10,
+                  width: "100%",
+                }}
+              />
             </View>
-            <View style={{ flexDirection: "row-reverse" }} >
-              <Feather name="tag" size={18} style={{ paddingTop: 5 }} />
-              <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الاسم : {means[i]}</Text>
-            </View>
-            <View style={{ flexDirection: "row-reverse" }} >
-              <Feather name="dollar-sign" size={18} style={{ paddingTop: 5 }} />
-              <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>السعر بالدولار : {rt}$</Text>
-            </View>
+            <ScrollView
+              style={{ backgroundColor: Clrs.DGreen, height: 300 }}
+              contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }}
+            >
+              {Object.keys(srates).map((i, index) => {
+                let nrt = 1 / srates[i]
+                let rt = nrt.toFixed(2)
+                if (rt == "0.00") {
+                  rt = nrt.toFixed(4)
+                }
+                if (rt == "0.0000") {
+                  rt = nrt.toFixed(6)
+                }
+                if (rt == "0.000000") {
+                  rt = nrt.toFixed(8)
+                }
+                if (rt == "0.00000000") {
+                  rt = nrt
+                }
+                return <TouchableOpacity
+                  onPress={() => {
+                    if (f) {
+                      setFrom(i)
+                      setFvalue(0.00)
+                      setTvalue(0.00)
+                      setModalVisible(false)
+                    } else {
+                      setTo(i)
+                      setFvalue(0.00)
+                      setTvalue(0.00)
+                      setModalVisible(false)
+                    }
+                  }}
+                  style={{ backgroundColor: Clrs.BYellow, width: 280, marginBottom: 10, borderRadius: 12, padding: 10, }} >
+                  <View style={{ flexDirection: "row-reverse" }} >
+                    <Feather name="edit" size={18} style={{ paddingTop: 5 }} />
+                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الرمز : {i}</Text>
+                  </View>
+                  <View style={{ flexDirection: "row-reverse" }} >
+                    <Feather name="tag" size={18} style={{ paddingTop: 5 }} />
+                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الاسم : {means[i]}</Text>
+                  </View>
+                  <View style={{ flexDirection: "row-reverse" }} >
+                    <Feather name="dollar-sign" size={18} style={{ paddingTop: 5 }} />
+                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>السعر بالدولار : {rt}$</Text>
+                  </View>
+                </TouchableOpacity>
+              })}
+            </ScrollView>
+
           </View>
-        })}
-      </ScrollView>
+        </View>
+      </Modal>
+      <CustomHeader title="تطبيق العملات" isHome={true} navigation={navigation} />
+      <View style={{ flex: 1, width: "100%", backgroundColor: Clrs.DGreen, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{
+          padding: 15,
+          width: "100%",
+        }}>
+          <TouchableOpacity
+            onPress={() => {
+              setF(true)
+              setModalVisible(true)
+            }}
+            style={{
+              padding: 15,
+              width: "100%",
+              borderRadius: 6,
+              backgroundColor: Clrs.BYellow
+            }}>
+            <View>
+              <View style={{ flexDirection: "row-reverse", width: 300, marginBottom: 10 }} >
+                <Feather name="arrow-down-circle" size={18} style={{ paddingTop: 3 }} />
+                <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}> من : {means[from]}</Text>
+                <View style={{ flex: 1 }} />
+                <Feather name="list" size={18} style={{ paddingTop: 3 }} />
+              </View>
+              <TextInput
+                placeholder="0.00"
+                keyboardType="decimal-pad"
+                value={fvalue}
+                onChangeText={(v) => {
+                  console.log(v)
+                  setFvalue(v)
+                  setTvalue((v / rates[from]) * rates[to])
+                }}
+                style={{
+                  fontFamily: "Cairo_400Regular",
+                  padding: 10,
+                  borderRadius: 3,
+                  backgroundColor: Clrs.BYellow,
+                  borderWidth: 2
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              const s = from
+              setFrom(to)
+              setTo(s)
+            }}
+            style={{
+              backgroundColor: Clrs.BYellow,
+              width: 50,
+              marginTop: 10,
+              height: 50,
+              borderRadius: 25,
+              alignItems: "center",
+              justifyContent: "center",
+              alignSelf: "flex-end"
+            }}
+          >
+            <Ionicons name="swap-vertical" size={32} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setF(false)
+              setModalVisible(true)
+            }}
+            style={{
+              padding: 15,
+              width: "100%",
+              borderRadius: 6,
+              marginTop: 10,
+              backgroundColor: Clrs.BYellow
+            }}>
+            <View style={{ flexDirection: "row-reverse", marginBottom: 10 }} >
+              <Feather name="arrow-down" size={18} style={{ paddingTop: 3 }} />
+              <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}> إلى : {means[to]}</Text>
+              <View style={{ flex: 1 }} />
+              <Feather name="list" size={18} style={{ paddingTop: 3 }} />
+            </View>
+            <TextInput
+              placeholder="0.00"
+              value={"" + tvalue}
+              editable={false}
+              onChangeText={(v) => {
+                v = v.toUpperCase()
+                console.log(v)
+              }}
+              style={{
+                fontFamily: "Cairo_400Regular",
+                padding: 10,
+                borderRadius: 3,
+                backgroundColor: Clrs.BYellow,
+                borderWidth: 2
+              }}
+            />
+          </TouchableOpacity>
+
+        </View>
+      </View>
     </View>
   );
 }
@@ -282,3 +421,32 @@ export default function HomeScreen({ navigation }) {
 HomeScreen.navigationOptions = {
   header: null,
 };
+
+const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: "100%",
+    marginTop: 22,
+    padding: 25,
+  },
+  modalView: {
+    width: "100%",
+    margin: 0,
+    backgroundColor: Clrs.DGreen,
+    borderRadius: 20,
+    borderColor: Clrs.BGreen,
+    borderWidth: 1,
+    padding: 15,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+});

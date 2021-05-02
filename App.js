@@ -17,6 +17,7 @@ import useLinking from './navigation/useLinking';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Clrs from "./constants/Colors";
 import { useFonts, Cairo_400Regular } from '@expo-google-fonts/cairo';
+import Constants from 'expo-constants';
 
 const Stack = createStackNavigator();
 
@@ -109,6 +110,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Clrs.DGreen,
-    paddingTop:20,
+    paddingTop:Constants.statusBarHeight,
   },
 });
