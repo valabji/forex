@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Ionicons,AntDesign } from '@expo/vector-icons';
+import { Ionicons,AntDesign,MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 
@@ -9,7 +9,7 @@ export default function TabBarIcon(props) {
       name={props.name}
       size={24}
       style={{ marginBottom: 0 }}
-      color={props.focused ? Colors.BYellow : Colors.tabIconDefault}
+      color={props.focused ? Colors.BGreen : Colors.tabIconDefault}
     />
   );
 }

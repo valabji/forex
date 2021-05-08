@@ -8,6 +8,7 @@ import Svg, { Defs, Path, ClipPath, Use } from "react-native-svg"
 const width = Dimensions.get("window").width
 
 export default function CustomHeader({ title, isHome, navigation }) {
+  title = "اسعار الذهب و العملات"
   const Hbg = ({ color }) => {
     return <Svg
       xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +44,7 @@ export default function CustomHeader({ title, isHome, navigation }) {
                 name="dollar-sign"
                 size={30}
                 style={{ marginLeft: 5 }}
-                color={Clrs.BYellow}
+                color={Clrs.BGreen}
               />
           </View>
           :
@@ -66,8 +67,8 @@ export default function CustomHeader({ title, isHome, navigation }) {
             </TouchableOpacity>
           </View>
       }
-      <View style={{ flex: 1.5, justifyContent: 'center' }}>
-        <Text style={{ textAlign: 'center',fontFamily:"Cairo_400Regular", fontWeight: '500', color: Clrs.BYellow, fontSize: 18 }}>{title}</Text>
+      <View style={{ flex: 2.5, justifyContent: 'center' }}>
+        <Text style={{ textAlign: 'center',fontFamily:"Cairo_400Regular", fontWeight: '500', color: Clrs.BGreen, fontSize: 18 }}>{title}</Text>
       </View>
       <View style={{ flex: 1 }}></View>
     </LinearGradient>

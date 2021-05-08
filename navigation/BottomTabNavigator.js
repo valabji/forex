@@ -7,7 +7,7 @@ import Screen2 from '../screens/Screen2';
 import Screen3 from '../screens/Screen3';
 import Clrs from "../constants/Colors";
 import { Text, View } from 'react-native';
-import { AntDesign,Feather,FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign, Feather, FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -20,12 +20,13 @@ export default function BottomTabNavigator({ navigation, route }) {
       tabBarOptions={{
         activeBackgroundColor: Clrs.DGreen,
         inactiveBackgroundColor: Clrs.DGreen,
-        tabStyle:{
-          paddingTop:10,
+        tabStyle: {
+          paddingTop: 10,
+          // marginTop:10,
         },
         style: {
           // borderTopWidth: 0,
-          // height:64
+          height: 100
 
         }
       }}
@@ -34,7 +35,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Main"
         component={MainScreen}
         options={{
-          tabBarLabel: ({ focused }) => { return <Text style={{ color: focused ? Clrs.BYellow : Clrs.tabIconDefault, paddingTop:5,paddingBottom:2 }}>المحول</Text> },
+          tabBarLabel: ({ focused }) => { return <Text style={{ fontFamily: "Cairo_400Regular", color: focused ? Clrs.BGreen : Clrs.tabIconDefault, paddingTop: 5, paddingBottom: 2 }}>المحول</Text> },
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="sync" />,
         }}
       />
@@ -42,7 +43,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Sc2"
         component={Screen2}
         options={{
-          tabBarLabel: ({ focused }) => { return <Text style={{ color: focused ? Clrs.BYellow : Clrs.tabIconDefault, paddingTop:5,paddingBottom:2 }}>قائمة الاسعار</Text> },
+          tabBarLabel: ({ focused }) => { return <Text style={{ fontFamily: "Cairo_400Regular", color: focused ? Clrs.BGreen : Clrs.tabIconDefault, paddingTop: 5, paddingBottom: 2 }}>قائمة الاسعار</Text> },
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="bars" />,
         }}
       />
@@ -50,8 +51,13 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Sc3"
         component={Screen3}
         options={{
-          tabBarLabel: ({ focused }) => { return <Text style={{ color: focused ? Clrs.BYellow : Clrs.tabIconDefault, paddingTop:5,paddingBottom:2 }}>عن التطبيق</Text> },
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="info" />,
+          tabBarLabel: ({ focused }) => { return <Text style={{ fontFamily: "Cairo_400Regular", color: focused ? Clrs.BGreen : Clrs.tabIconDefault, paddingTop: 5, paddingBottom: 2 }}>اسعار الذهب</Text> },
+          tabBarIcon: ({ focused }) => <MaterialCommunityIcons
+            name="gold"
+            size={24}
+            style={{ paddingTop: 5, paddingBottom: 2 }}
+            color={focused ? Clrs.BGreen : Clrs.tabIconDefault}
+          />,
         }}
       />
     </BottomTab.Navigator>
