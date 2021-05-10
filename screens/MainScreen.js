@@ -8,12 +8,19 @@ import { useState } from 'react';
 import admob, { MaxAdContentRating, InterstitialAd, RewardedAd, AdEventType, BannerAd, TestIds, firebase } from '@react-native-firebase/admob';
 import InAppReview from 'react-native-in-app-review';
 import { set } from 'react-native-reanimated';
+// import {
+//   AdMobBanner,
+//   AdMobInterstitial,
+//   PublisherBanner,
+//   AdMobRewarded,
+// } from 'react-native-admob'
 import {
   AdMobBanner,
   AdMobInterstitial,
   PublisherBanner,
   AdMobRewarded,
-} from 'react-native-admob'
+  setTestDeviceIDAsync,
+} from 'expo-ads-admob';
 
 // const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-3740649260356297/8955512554';
 const adUnitId = 'ca-app-pub-3740649260356297/8955512554';
@@ -36,7 +43,7 @@ export default function HomeScreen({ navigation }) {
   const [ft, setFt] = React.useState(true)
 
   const rates = global.res.rates
-  console.log("RDT : " + JSON.stringify(global.res))
+  // console.log("RDT : " + JSON.stringify(global.res))
   const [srates, setSrates] = useState(rates)
   const [adready, setAdready] = useState(false)
 
@@ -67,13 +74,13 @@ export default function HomeScreen({ navigation }) {
 
   if (ft) {
     setFt(false)
-    AdMobInterstitial.setAdUnitID(adUnitId);
-    // AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
-    AdMobInterstitial.requestAd().then(() => {
-      setTimeout(() => {
-        AdMobInterstitial.showAd()
-      }, 1000 * 20);
-    });
+    AdMobInterstitial.setAdUnitID(adUnitId).then(() => {
+      AdMobInterstitial.requestAdAsync({ servePersonalizedAds: true }).then(() => {
+        setTimeout(() => {
+          AdMobInterstitial.showAdAsync()
+        }, 1000 * 20);
+      })
+    })
 
     setTimeout(() => {
       showReview()
@@ -386,6 +393,7 @@ export default function HomeScreen({ navigation }) {
             <AdMobBanner
               adSize="fullBanner"
               adUnitID={adUnitIdbanner}
+              servePersonalizedAds={true}
               // testDevices={[AdMobBanner.simulatorId]}
               onAdFailedToLoad={error => console.error(error)}
             />
