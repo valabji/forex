@@ -25,10 +25,16 @@
     ],
     "ios": {
       "bundleIdentifier": "com.valabji.khamsat.forex",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3740649260356297~1808865149"
+      }
     },
     "android": {
-      "package": "com.valabji.khamsat.forex"
+      "package": "com.valabji.khamsat.forex",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-3740649260356297~1808865149"
+      }
     },
     "description": ""
   }
