@@ -5,15 +5,7 @@ import { StackActions } from '@react-navigation/native';
 import Clrs from "../constants/Colors";
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import admob, { MaxAdContentRating, InterstitialAd, RewardedAd, AdEventType, BannerAd, TestIds, firebase } from '@react-native-firebase/admob';
 import InAppReview from 'react-native-in-app-review';
-import { set } from 'react-native-reanimated';
-// import {
-//   AdMobBanner,
-//   AdMobInterstitial,
-//   PublisherBanner,
-//   AdMobRewarded,
-// } from 'react-native-admob'
 import {
   AdMobBanner,
   AdMobInterstitial,
@@ -389,7 +381,9 @@ export default function HomeScreen({ navigation }) {
             </View>
           </TouchableOpacity>
           <View style={{ height: 30 }} />
-          <View style={{ marginLeft: -40 }}>
+          
+        </View>
+        <View style={{ }}>
             <AdMobBanner
               adSize="fullBanner"
               adUnitID={adUnitIdbanner}
@@ -398,7 +392,6 @@ export default function HomeScreen({ navigation }) {
               onAdFailedToLoad={error => console.error(error)}
             />
           </View>
-        </View>
       </ScrollView>
     </View>
   );

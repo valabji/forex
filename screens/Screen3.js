@@ -5,8 +5,7 @@ import { StackActions } from '@react-navigation/native';
 import Clrs from "../constants/Colors";
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-// import React9Slice from 'react-9-slice';
-// import ImageCapInset from 'react-native-image-capinsets';
+
 const width = Dimensions.get("screen").width
 export default function Screen3({ navigation }) {
   const [from, setFrom] = useState("KWD")
