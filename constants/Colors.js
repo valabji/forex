@@ -20,4 +20,5 @@ export default {
   DGreen:'#dbdbcf',
   BGreen:'#333533',
   Golden:'#e76f51',
+  Shader:'#0507',
 };

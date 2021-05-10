@@ -15,8 +15,10 @@ import {
   AdMobRewarded,
 } from 'react-native-admob'
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-3740649260356297/8955512554';
-const adUnitIdbanner = __DEV__ ? TestIds.BANNER : 'ca-app-pub-3740649260356297/1296514380';
+// const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-3740649260356297/8955512554';
+const adUnitId = 'ca-app-pub-3740649260356297/8955512554';
+// const adUnitIdbanner = __DEV__ ? TestIds.BANNER : 'ca-app-pub-3740649260356297/1296514380';
+const adUnitIdbanner = 'ca-app-pub-3740649260356297/1296514380';
 
 
 
@@ -34,6 +36,7 @@ export default function HomeScreen({ navigation }) {
   const [ft, setFt] = React.useState(true)
 
   const rates = global.res.rates
+  console.log("RDT : " + JSON.stringify(global.res))
   const [srates, setSrates] = useState(rates)
   const [adready, setAdready] = useState(false)
 
@@ -92,9 +95,13 @@ export default function HomeScreen({ navigation }) {
         }} style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={{
-              borderRadius: 6,
+              // margin: 15,
               width: "100%",
-              margin: 15,
+              marginLeft: 15,
+              marginRight: 15,
+              marginTop: 10,
+              borderTopRightRadius: 6,
+              borderTopLeftRadius: 6,
               backgroundColor: Clrs.BYellow
             }}>
               <TextInput
@@ -122,59 +129,62 @@ export default function HomeScreen({ navigation }) {
                 style={{
                   fontFamily: "Cairo_400Regular",
                   padding: 10,
-                  width: "100%",
-                  color: Clrs.BGreen,
                 }}
               />
             </View>
+
             <ScrollView
-              style={{ backgroundColor: Clrs.DGreen, height: 300 }}
+              style={{ width: "100%", backgroundColor: Clrs.DGreen, height: 300 }}
               contentContainerStyle={{ flexGrow: 1 }}
             >
-              {Object.keys(srates).map((i, index) => {
-                let nrt = 1 / srates[i]
-                let rt = nrt.toFixed(2)
-                if (rt == "0.00") {
-                  rt = nrt.toFixed(4)
-                }
-                if (rt == "0.0000") {
-                  rt = nrt.toFixed(6)
-                }
-                if (rt == "0.000000") {
-                  rt = nrt.toFixed(8)
-                }
-                if (rt == "0.00000000") {
-                  rt = nrt
-                }
-                return <TouchableOpacity
-                  onPress={() => {
-                    if (f) {
-                      setFrom(i)
-                      setFvalue(0.00)
-                      setTvalue(0.00)
-                      setModalVisible(false)
-                    } else {
-                      setTo(i)
-                      setFvalue(0.00)
-                      setTvalue(0.00)
-                      setModalVisible(false)
-                    }
-                  }}
-                  style={{ backgroundColor: Clrs.BYellow, marginBottom: 10, borderRadius: 12, }} >
-                  <View style={{ flexDirection: "row-reverse" }} >
-                    <Feather name="edit" size={18} style={{ paddingTop: 5 }} />
-                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الرمز : {i}</Text>
-                  </View>
-                  <View style={{ flexDirection: "row-reverse" }} >
-                    <Feather name="tag" size={18} style={{ paddingTop: 5 }} />
-                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الاسم : {means[i]}</Text>
-                  </View>
-                  <View style={{ flexDirection: "row-reverse" }} >
-                    <Feather name="dollar-sign" size={18} style={{ paddingTop: 5 }} />
-                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>السعر بالدولار : {rt}$</Text>
-                  </View>
-                </TouchableOpacity>
-              })}
+              {
+                Object.keys(srates).map((i, index) => {
+                  let nrt = 1 / srates[i]
+                  let rt = nrt.toFixed(2)
+                  let can = Object.keys(srates).length > (index + 1)
+                  if (rt == "0.00") {
+                    rt = nrt.toFixed(4)
+                  }
+                  if (rt == "0.0000") {
+                    rt = nrt.toFixed(6)
+                  }
+                  if (rt == "0.000000") {
+                    rt = nrt.toFixed(8)
+                  }
+                  if (rt == "0.00000000") {
+                    rt = nrt
+                  }
+                  return <TouchableOpacity
+                    onPress={() => {
+                      if (f) {
+                        setFrom(i)
+                        setFvalue(0.00)
+                        setTvalue(0.00)
+                        setModalVisible(false)
+                      } else {
+                        setTo(i)
+                        setFvalue(0.00)
+                        setTvalue(0.00)
+                        setModalVisible(false)
+                      }
+                    }}
+                    style={{ backgroundColor: Clrs.BYellow, marginBottom: 0, borderTopWidth: 1, borderTopColor: Clrs.DGreen, borderBottomRightRadius: can ? 0 : 12, borderBottomLeftRadius: can ? 0 : 12, padding: 10 }} >
+
+                    <View style={{ flexDirection: "row-reverse" }} >
+                      <Feather name="tag" size={18} style={{ paddingTop: 5 }} />
+                      <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_700Bold" }}>الاسم :<Text style={{ color: Clrs.Golden }}> {means[i]}</Text></Text>
+                    </View>
+                    <View style={{ flexDirection: "row-reverse" }} >
+                      <Feather name="edit" size={18} style={{ paddingTop: 5 }} />
+                      <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الرمز : {i}</Text>
+                      <Text style={{ color: "black", marginRight: 30, fontFamily: "Cairo_400Regular" }}>السعر بالدولار : </Text>
+                      <View style={{ flex: 1 }} />
+                      <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>${rt}</Text>
+                    </View>
+
+                  </TouchableOpacity>
+                })
+              }
             </ScrollView>
 
           </View>
@@ -205,7 +215,17 @@ export default function HomeScreen({ navigation }) {
               alignItems: "center",
               justifyContent: "center",
               alignSelf: "flex-end",
-              flexDirection: "row-reverse"
+              flexDirection: "row-reverse",
+
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.18,
+              shadowRadius: 1.00,
+
+              elevation: 1,
             }}
           >
             <Ionicons name="star" size={24} />
@@ -220,18 +240,37 @@ export default function HomeScreen({ navigation }) {
               setModalVisible(true)
             }}
             style={{
+              backgroundColor: Clrs.BYellow,
+              borderRadius: 6,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.18,
+              shadowRadius: 1.00,
+
+              elevation: 1,
+            }}>
+            <View style={{
               padding: 15,
               width: "100%",
-              borderRadius: 6,
-              backgroundColor: Clrs.BYellow
-            }}>
-            <View>
-              <View style={{ flexDirection: "row-reverse", marginBottom: 10 }} >
-                <Feather name="arrow-down-circle" size={18} style={{ paddingTop: 3 }} />
-                <Text style={{ color: Clrs.Golden, marginRight: 10, fontFamily: "Cairo_700Bold" }}> من : {means[from]}</Text>
-                <View style={{ flex: 1 }} />
-                <Feather name="list" size={18} style={{ paddingTop: 3 }} />
-              </View>
+              borderTopRightRadius: 6,
+              borderTopLeftRadius: 6,
+              backgroundColor: Clrs.Shader,
+              flexDirection: "row-reverse", marginBottom: 0
+            }} >
+              <Feather name="arrow-down-circle" color={Clrs.BYellow} size={18} style={{ paddingTop: 6 }} />
+              <Text style={{ color: Clrs.BYellow, marginRight: 10, fontFamily: "Cairo_700Bold" }}> من : {means[from]}</Text>
+              <View style={{ flex: 1 }} />
+              <Feather name="list" size={18} color={Clrs.BYellow} style={{ paddingTop: 3 }} />
+            </View>
+            <View style={{
+              padding: 15,
+              width: "100%",
+              borderBottomRightRadius: 6,
+              borderBottomLeftRadius: 6,
+            }} >
               <TextInput
                 placeholder="0.00"
                 placeholderTextColor={Clrs.BGreen}
@@ -269,7 +308,16 @@ export default function HomeScreen({ navigation }) {
               borderRadius: 25,
               alignItems: "center",
               justifyContent: "center",
-              alignSelf: "flex-end"
+              alignSelf: "flex-end",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.18,
+              shadowRadius: 1.00,
+
+              elevation: 1,
             }}
           >
             <Ionicons name="swap-vertical" size={32} />
@@ -280,34 +328,58 @@ export default function HomeScreen({ navigation }) {
               setModalVisible(true)
             }}
             style={{
-              padding: 15,
-              width: "100%",
+              backgroundColor: Clrs.BYellow,
               borderRadius: 6,
               marginTop: 10,
-              backgroundColor: Clrs.BYellow
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.18,
+              shadowRadius: 1.00,
+
+              elevation: 1,
             }}>
-            <View style={{ flexDirection: "row-reverse", marginBottom: 10 }} >
-              <Feather name="arrow-left-circle" size={18} style={{ paddingTop: 3 }} />
-              <Text style={{ color: Clrs.Golden, marginRight: 10, fontFamily: "Cairo_700Bold" }}> إلى : {means[to]}</Text>
+            <View style={{
+              padding: 15,
+              width: "100%",
+              borderTopRightRadius: 6,
+              borderTopLeftRadius: 6,
+              backgroundColor: Clrs.Shader,
+              flexDirection: "row-reverse", marginBottom: 0
+            }} >
+              <Feather name="arrow-left-circle" color={Clrs.BYellow} size={18} style={{ paddingTop: 6 }} />
+              <Text style={{ color: Clrs.BYellow, marginRight: 10, fontFamily: "Cairo_700Bold" }}> إلى : {means[to]}</Text>
               <View style={{ flex: 1 }} />
-              <Feather name="list" size={18} style={{ paddingTop: 3 }} />
+              <Feather name="list" size={18} color={Clrs.BYellow} style={{ paddingTop: 3 }} />
             </View>
-            <TextInput
-              placeholder="0.00"
-              value={"" + tvalue}
-              editable={false}
-              onChangeText={(v) => {
-                v = v.toUpperCase()
-                console.log(v)
-              }}
-              style={{
-                fontFamily: "Cairo_400Regular",
-                padding: 10,
-                borderRadius: 3,
-                backgroundColor: Clrs.BYellow,
-                borderBottomWidth: 1
-              }}
-            />
+            <View style={{
+              padding: 15,
+              width: "100%",
+              borderBottomRightRadius: 6,
+              borderBottomLeftRadius: 6,
+            }} >
+              <TextInput
+                placeholder="0.00"
+                value={"" + tvalue}
+                editable={false}
+                onChangeText={(v) => {
+                  v = v.toUpperCase()
+                  console.log(v)
+                }}
+                style={{
+                  fontFamily: "Cairo_400Regular",
+                  padding: 10,
+                  borderRadius: 3,
+                  backgroundColor: Clrs.BYellow,
+                  borderBottomWidth: 1
+                }}
+              />
+              <Text style={{ color: Clrs.tabIconDefault, marginTop: 10, textAlign: "right", fontFamily: "Cairo_400Regular" }}>
+                اخر تحديث للاسعار بتاريخ : {global.res.date}
+              </Text>
+            </View>
           </TouchableOpacity>
           <View style={{ height: 30 }} />
           <View style={{ marginLeft: -40 }}>

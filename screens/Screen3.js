@@ -56,9 +56,13 @@ export default function Screen3({ navigation }) {
         }} style={styles.centeredView}>
           <View style={styles.modalView}>
             <View style={{
-              borderRadius: 6,
+              // margin: 15,
               width: "100%",
-              margin: 15,
+              marginLeft: 15,
+              marginRight: 15,
+              marginTop: 10,
+              borderTopRightRadius: 6,
+              borderTopLeftRadius: 6,
               backgroundColor: Clrs.BYellow
             }}>
               <TextInput
@@ -86,50 +90,53 @@ export default function Screen3({ navigation }) {
                 style={{
                   fontFamily: "Cairo_400Regular",
                   padding: 10,
-                  width: "100%",
-                  color: Clrs.BGreen,
                 }}
               />
             </View>
+
             <ScrollView
               style={{ width: "100%", backgroundColor: Clrs.DGreen, height: 300 }}
               contentContainerStyle={{ flexGrow: 1 }}
             >
-              {Object.keys(srates2).map((i, index) => {
-                let nrt = 1 / srates2[i]
-                let rt = nrt.toFixed(2)
-                if (rt == "0.00") {
-                  rt = nrt.toFixed(4)
-                }
-                if (rt == "0.0000") {
-                  rt = nrt.toFixed(6)
-                }
-                if (rt == "0.000000") {
-                  rt = nrt.toFixed(8)
-                }
-                if (rt == "0.00000000") {
-                  rt = nrt
-                }
-                return <TouchableOpacity
-                  onPress={() => {
-                    setFrom(i)
-                    setModalVisible(false)
-                  }}
-                  style={{ backgroundColor: Clrs.BYellow, marginBottom: 10, borderRadius: 12, }} >
-                  <View style={{ flexDirection: "row-reverse" }} >
-                    <Feather name="edit" size={18} style={{ paddingTop: 5 }} />
-                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الرمز : {i}</Text>
-                  </View>
-                  <View style={{ flexDirection: "row-reverse" }} >
-                    <Feather name="tag" size={18} style={{ paddingTop: 5 }} />
-                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الاسم : {means[i]}</Text>
-                  </View>
-                  <View style={{ flexDirection: "row-reverse" }} >
-                    <Feather name="dollar-sign" size={18} style={{ paddingTop: 5 }} />
-                    <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>السعر بالدولار : {rt}$</Text>
-                  </View>
-                </TouchableOpacity>
-              })}
+              {
+                Object.keys(srates2).map((i, index) => {
+                  let nrt = 1 / srates2[i]
+                  let rt = nrt.toFixed(2)
+                  let can = Object.keys(srates2).length > (index + 1)
+                  if (rt == "0.00") {
+                    rt = nrt.toFixed(4)
+                  }
+                  if (rt == "0.0000") {
+                    rt = nrt.toFixed(6)
+                  }
+                  if (rt == "0.000000") {
+                    rt = nrt.toFixed(8)
+                  }
+                  if (rt == "0.00000000") {
+                    rt = nrt
+                  }
+                  return <TouchableOpacity
+                    onPress={() => {
+                      setFrom(i)
+                      setModalVisible(false)
+                    }}
+                    style={{ backgroundColor: Clrs.BYellow, marginBottom: 0, borderTopWidth: 1, borderTopColor: Clrs.DGreen, borderBottomRightRadius: can ? 0 : 12, borderBottomLeftRadius: can ? 0 : 12, padding: 10 }} >
+
+                    <View style={{ flexDirection: "row-reverse" }} >
+                      <Feather name="tag" size={18} style={{ paddingTop: 5 }} />
+                      <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_700Bold" }}>الاسم :<Text style={{ color: Clrs.Golden }}> {means[i]}</Text></Text>
+                    </View>
+                    <View style={{ flexDirection: "row-reverse" }} >
+                      <Feather name="edit" size={18} style={{ paddingTop: 5 }} />
+                      <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>الرمز : {i}</Text>
+                      <Text style={{ color: "black", marginRight: 30, fontFamily: "Cairo_400Regular" }}>السعر بالدولار : </Text>
+                      <View style={{ flex: 1 }} />
+                      <Text style={{ color: "black", marginRight: 10, fontFamily: "Cairo_400Regular" }}>${rt}</Text>
+                    </View>
+
+                  </TouchableOpacity>
+                })
+              }
             </ScrollView>
 
           </View>
@@ -141,43 +148,63 @@ export default function Screen3({ navigation }) {
         style={{ backgroundColor: Clrs.DGreen }}
         contentContainerStyle={{ flexGrow: 1, alignItems: 'center', justifyContent: "center" }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            setModalVisible(true)
+        <View
+          style={{
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 1,
+            },
+            shadowOpacity: 0.22,
+            shadowRadius: 2.22,
+
+            elevation: 3,
+            backgroundColor: Clrs.BYellow,
+            borderRadius: 12,
           }}
-          style={{ backgroundColor: Clrs.BYellow, width: width - 30, marginBottom: 0, borderRadius: 0, borderTopRightRadius: 12, borderTopLeftRadius: 12, padding: 10, }} >
-          <View style={{ flexDirection: "row-reverse" }} >
-            <Text style={{ color: "black", marginRight: 0, fontFamily: "Cairo_400Regular" }}>العملة : </Text>
-            <View style={{ flex: 1 }} />
-            <Text style={{ color: "black", marginLeft: 10, fontFamily: "Cairo_400Regular" }}>{from} </Text>
-            <Ionicons name="sync" size={18} style={{ paddingTop: 5 }} />
-          </View>
-        </TouchableOpacity>
-        {srates.map((i, index) => {
-
-          let nrt2 = (1 / i.price) * global.res.rates[from]
-          let rt2 = nrt2.toFixed(2)
-          if (rt2 == "0.00") {
-            rt2 = nrt2.toFixed(4)
-          }
-          if (rt2 == "0.0000") {
-            rt2 = nrt2.toFixed(6)
-          }
-          if (rt2 == "0.000000") {
-            rt2 = nrt2.toFixed(8)
-          }
-          if (rt2 == "0.00000000") {
-            rt2 = nrt2
-          }
-
-          return <View style={{ backgroundColor: Clrs.BYellow, width: width - 30, marginBottom: 0, borderRadius: 0, borderBottomRightRadius: index == 5 ? 12 : 0, borderBottomLeftRadius: index == 5 ? 12 : 0, borderTopWidth: 1, borderColor: Clrs.DGreen, padding: 10, }} >
+        >
+          <TouchableOpacity
+            onPress={() => {
+              setModalVisible(true)
+            }}
+            style={{
+              backgroundColor: Clrs.Shader, width: width - 30, marginBottom: 0, borderRadius: 0, borderTopRightRadius: 12, borderTopLeftRadius: 12, padding: 10,
+            }} >
             <View style={{ flexDirection: "row-reverse" }} >
-              <Text style={{ flex: 1, color: "black", marginRight: 0, textAlign: "right", fontFamily: "Cairo_400Regular" }}>{i.name}</Text>
-              <Feather name="chevrons-left" size={24} color={Clrs.Golden} />
-              <Text style={{ flex: 1, color: "black", marginRight: 0, fontFamily: "Cairo_400Regular" }}>{from} {rt2}</Text>
+              <Text style={{ color: Clrs.BYellow, marginRight: 0, fontFamily: "Cairo_700Bold" }}>العملة : </Text>
+              <View style={{ flex: 1 }} />
+              <Text style={{ color: Clrs.BYellow, marginLeft: 10, fontFamily: "Cairo_700Bold" }}>{means[from]} </Text>
+              <Ionicons name="sync" color={Clrs.BYellow} size={22} style={{ paddingTop: 3 }} />
             </View>
-          </View>
-        })}
+          </TouchableOpacity>
+          {srates.map((i, index) => {
+
+            let nrt2 = (1 / i.price) * global.res.rates[from]
+            let rt2 = nrt2.toFixed(2)
+            if (rt2 == "0.00") {
+              rt2 = nrt2.toFixed(4)
+            }
+            if (rt2 == "0.0000") {
+              rt2 = nrt2.toFixed(6)
+            }
+            if (rt2 == "0.000000") {
+              rt2 = nrt2.toFixed(8)
+            }
+            if (rt2 == "0.00000000") {
+              rt2 = nrt2
+            }
+
+            return <View style={{
+              backgroundColor: Clrs.BYellow, width: width - 30, marginBottom: 0, borderRadius: 0, borderBottomRightRadius: index == 5 ? 12 : 0, borderBottomLeftRadius: index == 5 ? 12 : 0, borderTopWidth: 1, borderColor: Clrs.DGreen, padding: 10,
+            }} >
+              <View style={{ flexDirection: "row-reverse" }} >
+                <Text style={{ flex: 1, color: "black", marginRight: 0, textAlign: "right", fontFamily: "Cairo_400Regular" }}>{i.name}</Text>
+                <Feather name="chevrons-left" size={24} color={Clrs.Golden} />
+                <Text style={{ flex: 1, color: "black", marginRight: 0, fontFamily: "Cairo_400Regular" }}>{from} {rt2}</Text>
+              </View>
+            </View>
+          })}
+        </View>
       </ScrollView>
     </View>
   );
