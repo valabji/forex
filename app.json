@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "اسعار الذهب و العملات",
+    "name": "Forex",
     "slug": "Forex",
     "privacy": "public",
     "platforms": [
@@ -27,13 +27,13 @@
       "bundleIdentifier": "com.valabji.khamsat.forex",
       "supportsTablet": true,
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3740649260356297~1808865149"
+        "googleMobileAdsAppId": "ca-app-pub-3740649260356297~7024876415"
       }
     },
     "android": {
       "package": "com.valabji.khamsat.forex",
       "config": {
-        "googleMobileAdsAppId": "ca-app-pub-3740649260356297~1808865149"
+        "googleMobileAdsAppId": "ca-app-pub-3740649260356297~7024876415"
       }
     },
     "description": ""
