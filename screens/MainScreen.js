@@ -13,11 +13,12 @@ import {
   AdMobRewarded,
   setTestDeviceIDAsync,
 } from 'expo-ads-admob';
+import SimpleToast from 'react-native-simple-toast';
 
 // const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-3740649260356297/8955512554';
-const adUnitId = 'ca-app-pub-3740649260356297/8955512554';
+const adUnitId = 'ca-app-pub-3740649260356297/6450161344';
 // const adUnitIdbanner = __DEV__ ? TestIds.BANNER : 'ca-app-pub-3740649260356297/1296514380';
-const adUnitIdbanner = 'ca-app-pub-3740649260356297/1296514380';
+const adUnitIdbanner = 'ca-app-pub-3740649260356297/8146386399';
 
 
 
@@ -389,7 +390,9 @@ export default function HomeScreen({ navigation }) {
               adUnitID={adUnitIdbanner}
               servePersonalizedAds={true}
               // testDevices={[AdMobBanner.simulatorId]}
-              onAdFailedToLoad={error => console.error(error)}
+              onAdFailedToLoad={error => {
+                SimpleToast.show(error)
+                console.warn(error)}}
             />
           </View>
       </ScrollView>

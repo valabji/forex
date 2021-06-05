@@ -18,6 +18,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Clrs from "./constants/Colors";
 import { useFonts, Cairo_400Regular, Cairo_700Bold, Cairo_900Black } from '@expo-google-fonts/cairo';
 import Constants from 'expo-constants';
+import { requestTrackingPermission } from 'react-native-tracking-transparency';
 
 const Stack = createStackNavigator();
 
@@ -219,6 +220,33 @@ global.means = {
   "ZNC": "Zinc",
   "ZWL": "Zimbabwean Dollar"
 }
+global.metals = {
+  "ALU": "Aluminum",
+  "NI": "Nickel",
+  "RUTH": "Ruthenium",
+  "TIN": "Tin",
+  "XAG": "Silver (Troy Ounce)",
+  "XAU": "Gold (Troy Ounce)",
+  "XCU": "Copper",
+  "XPD": "Palladium (Troy Ounce)",
+  "XPT": "Platinum (Troy Ounce)",
+  "XRH": "Rhodium (Troy Ounce)",
+  "ZNC": "Zinc",
+}
+
+global.ecoin = {
+  "ADA": "Cardano",
+  "BCH": "Bitcoin Cash",
+  "BTC": "Bitcoin",
+  "ETH": "Ethereum",
+  "LINK": "Chainlink",
+  "LTC": "Litecoin",
+  "UNI": "Uniswap",
+  "XLM": "Stellar",
+  "XRP": "Ripple",
+  "XRP2": "Ripple",
+}
+
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -235,6 +263,7 @@ export default function App(props) {
 
   if (ft) {
     setFt(false)
+    requestTrackingPermission()
     fetch("https://metals-api.com/api/latest?access_key=l7b2h4bo68x157cpxxlcan4hdexm8h5iief26wzk4y5y97z54x7psna80nqu&base=USD", {
       method: "GET"
     }).then((response) => {
