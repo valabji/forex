@@ -2,9 +2,9 @@
 > Simple Mobile Application Fully functional Built with React-Native for iOS and Android
 
 [![Status](https://img.shields.io/badge/build-passing-green.svg?branch=master)](https://github.com/valabji/forex)
-[![React Native](https://img.shields.io/badge/React%20Native-v42.0.0-blue.svg?logo=react)](https://facebook.github.io/react-native/)
-[![Expo](https://img.shields.io/badge/Expo-SDK42.0.0-black.svg?logo=expo)](https://expo.io/)
-[![React Navigation V5](https://img.shields.io/badge/React%20Navigation-v5.0.0-blue.svg?logo=react)](https://reactnavigation.org/)
+[![React Native](https://img.shields.io/badge/React%20Native-0.63.0-blue.svg?logo=react)](https://facebook.github.io/react-native/)
+[![Expo](https://img.shields.io/badge/Expo-SDK41.0.0-black.svg?logo=expo)](https://expo.io/)
+[![React Navigation V5](https://img.shields.io/badge/React%20Navigation-v5-blue.svg?logo=react)](https://reactnavigation.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellowgreen.svg)](http://mit-license.org/)
 
 
