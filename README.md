@@ -1,5 +1,5 @@
 # Forex
-> Simple Mobile Application Fully functional Built with React-Native for iOS and Android
+> Fully functional Mobile Application Built with React-Native for iOS and Android
 
 [![Status](https://img.shields.io/badge/build-passing-green.svg?branch=master)](https://github.com/valabji/forex)
 [![React Native](https://img.shields.io/badge/React%20Native-0.63.0-blue.svg?logo=react)](https://facebook.github.io/react-native/)
